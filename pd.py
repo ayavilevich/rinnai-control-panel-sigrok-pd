@@ -41,16 +41,16 @@ RESET_RATIO_MAX = 2
 
 class Decoder(srd.Decoder):
     api_version = 3
-    id = 'rinnai-onewire'
-    name = 'Rinnai 1-Wire'
-    longname = 'Rinnai control panel internal one wire protocol'
+    id = 'rinnai-control-panel'
+    name = 'Rinnai Control Panel'
+    longname = 'Rinnai control panel internal pulse length encoding protocol'
     desc = 'Bidirectional, half-duplex, asynchronous serial bus.' # ?
     license = 'gplv2+'
     inputs = ['logic']
     outputs = ['rinnai']
     tags = ['Embedded/industrial']
     channels = (
-        {'id': 'owr', 'name': 'OWR', 'desc': '1-Wire signal line'},
+        {'id': 'data', 'name': 'Data', 'desc': 'Pulse length signal line'},
     )
     options = (
         {'id': 'invert', 'desc': 'Invert bits',
@@ -68,6 +68,7 @@ class Decoder(srd.Decoder):
     annotation_rows = (
         ('bits', 'Bits', (0, 2)),
         ('warnings', 'Warnings', (1,)),
+        ('bytes', 'Bytes', (3,)),
         ('packets', 'Packets', (4,)),
     )
 
@@ -188,12 +189,12 @@ class Decoder(srd.Decoder):
                 elif timeB > RESET_RATIO_MIN * SYMBOL_DURATION_US and timeB < RESET_RATIO_MAX * SYMBOL_DURATION_US: # not a symbol but an idle zone and a new reset
                     self.bits_reset()
                     self.put(self.rise, self.samplenum, self.out_ann, [ANN_ID_RESET, ['Reset: %d' % time]])
-                    self.bytes_flush(self.samplenum)
+                    self.bytes_flush(self.fall)
                 else:
                     self.bits_reset()
                     self.put(self.fall, self.samplenum, self.out_ann, [ANN_ID_WARNINGS, ['Bad Bit: %d,%d' % (timeA, timeB)]])
                     self.state = 'IDLE' # start over
-                    self.bytes_flush(self.samplenum)
+                    self.bytes_flush(self.fall)
                 self.fall = self.samplenum # update state
 
     ##def put_message(self, data):

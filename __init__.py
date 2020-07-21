@@ -20,11 +20,14 @@
 ##
 
 '''
-This protocol decoder handles the Rinnai control panel internal one wire protocol.
+This Sigrok Protocol Decoder (PD) handles the internal protocol of a Rinnai gas heater control panel.
 
-based on onewire_link PD
+This PD is based on onewire_link PD.
 
-TBD
+The protocol is digital and has 0 and 1 encoded with variable pulse length encoding.
+
+Each packet has a sync followed by 48 bits. This forms 6 bytes lsb first.
+The first 5 bytes are data and the last is a xor of the first 5.
 '''
 
 from .pd import Decoder
