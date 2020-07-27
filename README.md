@@ -8,10 +8,11 @@ https://sigrok.org/
 PulseView is the UI for Sigrok  
 https://sigrok.org/wiki/PulseView
 
-Rinnai is a Japanese company making gas heaters and other equipment
+Rinnai is a Japanese company making gas heaters and other equipment  
+https://www.rinnai.us/
 
 Rinnai makes various control panels for their devices  
-https://www.google.com/search?client=firefox-b-d&q=rinnai+control+panel
+https://www.google.com/search?q=rinnai+control+panel
 
 For example  
 https://www.alpinehomeair.com/viewproduct.cfm?productid=453059509
