@@ -2,6 +2,8 @@
 
 Sigrok Protocol Decoder for the internal protocol of a Rinnai gas heater control panel
 
+Please also see https://github.com/ayavilevich/rinnai-wifi/ for an example of an ESP32 firmware that implements this protocol
+
 Sigrok is a portable, cross-platform, free open source signal analysis software suite  
 https://sigrok.org/
 
